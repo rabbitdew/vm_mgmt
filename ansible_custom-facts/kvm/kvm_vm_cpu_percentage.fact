@@ -1,0 +1,11 @@
+#!/usr/bin/python
+import json
+from kvm_vm_resources import vm_cpu,node_cpu
+
+vm_cpu_total = 0
+for value in vm_cpu().values():
+    vm_cpu_total += value
+node_cpu_total = node_cpu()
+percentage_total = float(vm_cpu_total) / float(node_cpu_total) * 100
+returnJson = json.dumps({'total_vm_cpu' : str(round(percentage_total,1)) + '%'})
+print(returnJson)

@@ -1,0 +1,7 @@
+#!/usr/bin/python
+from kvm_vm_resources import vm_cpu
+import json
+
+myDict =  vm_cpu()
+jsonOut = json.dumps(myDict)
+print(jsonOut)

@@ -1,0 +1,12 @@
+#!/usr/bin/python
+from kvm_vm_resources import vm_ram,node_ram
+import json
+
+vm_ram_total = 0
+for value in vm_ram().values():
+    vm_ram_total += value
+vm_ram_total_gb = (vm_ram_total / 1000 / 1000)
+node_ram_total_gb = (node_ram() / 1000 / 1000)
+percentage_total = float(vm_ram_total_gb) / float(node_ram_total_gb) * 100
+returnJson = json.dumps({'total_vm_ram' : str(round(percentage_total,1)) + '%'})
+print(returnJson)

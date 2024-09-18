@@ -1,0 +1,16 @@
+- hosts: esx
+  gather_facts: no
+  tasks:
+    - name: Create portgroups
+      raw: "esxcli network vswitch standard portgroup add --portgroup-name={{ item }} --vswitch-name=vSwitch1"
+      with_items:
+        - '101-vlan-1'
+        - '201-vlan-2'
+      tags: vlan
+    - name: Add vlan ids to port groups
+      raw: "esxcfg-vswitch -p {{ item.name }} -v {{ item.vid }} vSwitch1"
+      with_items:
+        - { name: '101-vlan-1', vid: '101' }
+        - { name: '201-vlan-2', vid: '201' }
+      tags: vlan
+

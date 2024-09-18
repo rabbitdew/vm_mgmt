@@ -1,0 +1,14 @@
+#!/usr/bin/python
+from kvm_vm_resources import vm_cpu
+import json
+
+# This fact runs the vm_cpu() method and returns the total number of VMs.
+myCounter = 0
+myDict =  vm_cpu()
+
+for i in myDict.keys():
+  myCounter += 1
+
+returnDict = { 'total_vms': str(myCounter) }
+jsonOut = json.dumps(returnDict)
+print(jsonOut)

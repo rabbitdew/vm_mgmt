@@ -1,0 +1,21 @@
+# This playbook runs the custom fact script and returns 
+# the results. I don't think it's better than just doing 
+# this one-liner though:
+# $ ansible <GROUP> -m setup -a 'gather_subset=facter filter=ansible_local'
+
+- hosts: kvm_hosts
+  gather_facts: no
+  vars: 
+  tasks:
+    - name: Check VM resources
+      raw: '/etc/ansible/facts.d/kvm_vm_resources.py'
+      register: kvm_vm_resources
+    - name: Print details
+      debug:
+        msg: 
+          - "Product name:     {{ ansible_product_name }}"
+          - "{{ kvm_vm_resources.stdout_lines[0] }}"
+          - "{{ kvm_vm_resources.stdout_lines[1] }}"
+          - "{{ kvm_vm_resources.stdout_lines[2] }}"
+          - "{{ kvm_vm_resources.stdout_lines[3] }}"
+          - "{{ kvm_vm_resources.stdout_lines[4] }}"
